@@ -4,7 +4,7 @@
 		header("location:login.php");
 	}
 
-	$connect = mysql_connect("localhost","root","passme");
+	$connect = mysql_connect("terle.dk:3306","ticketsAdmin","minpikerhaard");
 	mysql_select_db("screwyouticket",$connect);
 	$username;
 	$password;

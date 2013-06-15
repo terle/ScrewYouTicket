@@ -1,0 +1,8 @@
+Info om DB
+
+host: terle.dk:3306
+
+user: ticketsAdmin
+pass: minpikerhaard
+
+db: screwyouticket
