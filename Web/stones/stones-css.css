@@ -1,0 +1,98 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+body{
+	width:735px;
+	}
+li{ list-style-type:none;
+	padding:0;
+	margin:0;}
+#midt{
+	width:500px;
+	height:500px;
+	float:left;
+	}
+#stone-slide{
+	width:500px;
+	height:500px;
+	float:left;
+	}
+#stone-slide li{
+	list-style-type:none !important;
+	}
+	
+#right{
+	width:220px;
+	height:auto;
+	margin-left:15px;
+	float:left;
+	}
+#right li{
+	list-style:none;
+	}
+	
+#right #pdf p {
+	color:#972035;
+	display:inline;
+  	background:url('http://tuerislund.dk/e-nielsen/wp-content/uploads/2013/05/link_icon.png') no-repeat scroll 0 0px;
+  	padding-left:15px;
+	font-family:"Georgia";
+}
+#pdf{
+	margin-top:26px;
+	margin-bottom:13px;
+	}
+h7{
+	font-size:13px;
+  	line-height:13px;
+  	color:#972035;
+  	font-family:geogia;
+  	font-weight:500;
+}
+#right p{
+	font-size: 11px;
+	line-height: 13px;
+	font-family: georgia;
+	color: #998B7D;
+	font-family:"helvetica";
+}	
