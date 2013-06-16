@@ -1,8 +1,12 @@
 <?php
-	$connect=mysql_connect("tuerislund.dk.mysql","tuerislund_dk","jfpmooh777");
-	mysql_select_db("tuerislund_dk",$connect);
+	$connect = mysql_connect("terle.dk", "ticketsAdmin", "minpikerhaard");
+	mysql_select_db("screwyouticket", $connect);
 
-	$stone_table = "wp_06stones";
-	$download_table = "wp_06downloads";
-	$picture_table = "wp_06pictures";
+	$address_table = "address";
+	$event_table = "event";
+	$event_images_table = "event_images";
+	$payment_table = "payment";
+	$payment_system_codes_table = "payment_system_codes";
+	$price_table = "price";
+	$ticket_table = "ticket";
 ?>
