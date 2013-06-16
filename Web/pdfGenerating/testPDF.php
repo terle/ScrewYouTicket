@@ -55,7 +55,7 @@ $pdf->AddPage();
 $html = <<<EOD
 <h1>Test pdf!</h1>
 <i>Dette er skrevet i HTML med TCPDF library.</i>
-<p>Her kan står en masse skrammel.</p>
+<h2>Her kan står en masse skrammel.</h2>
 <p>Det kan styles i HTML (GO TUE!!!)</p>
 <p>Tak for at læse</p>
 EOD;
@@ -66,17 +66,18 @@ $pdf->SetFont('helvetica', '', 10);
 
 
 // new style
-/*$style = array(
-    'border' => 2,
+$style = array(
+    'border' => 6,
     'padding' => 'auto',
-    'fgcolor' => array(0,0,255),
-    'bgcolor' => array(255,255,64)
+    //'fgcolor' => array(0,0,255),
+    //'bgcolor' => array(255,255,64)
 );
-*/
+
 
 // QRCODE,H : QR-CODE Best error correction
-$pdf->write2DBarcode('www.randomwebsite.com/', 'QRCODE,H', 80, 210, 50, 50, $style, 'N');
-$pdf->Text(80, 205, 'QRCODE H - COLORED');
+//$pdf->write2DBarcode('www.randomwebsite.com/', 'QRCODE,H', 100, 20, 50, 50, $style, 'N');
+$pdf->write2DBarcode('www.randomwebsite.com/', 'QRCODE,H', 80, 80, 50, 50, $style, 'N');
+$pdf->Text(80, 140, 'QRCODE H - Til RandomWebsite.com');
 
 /*
 // new style
