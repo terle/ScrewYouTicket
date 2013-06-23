@@ -25,10 +25,25 @@
 	// Update
 	if(isset($_POST["update"])){
 		if($_POST["update"]=="yes"){
-			$username=$_POST["username"];
-			$password=$_POST["password"];
+			$name = $_POST["name"];
+			$event_date = $_POST["event_date"];
+			$time_start = $_POST["time_start"];
+			$time_end = $_POST["time_end"];
+			$address_id = $_POST["address_id"];
+			$isactive = $_POST["isactive"];
+			$description = $_POST["description"];
 
-			$query="update user set username='$username' , password='$password' where id=".$_POST['id'];
+			$query=
+				"update event set 
+					name='$name', 
+					event_date='$event_date', 
+					time_start='$time_start', 
+					time_end='$time_end', 
+					address_id='$address_id', 
+					isactive='$isactive', 
+					description='$description' 
+				where id=".$_POST['id'];
+				
 			if(mysql_query($query)) {
 				echo "<center>Event opdateret!</center><br>";
 			}
@@ -129,19 +144,39 @@
 		<form method="post" action="index.php">
 			<table align="center" border="0">
 				<tr>
-					<td>username:</td>
-					<td><input type="text" name="username" value="<?php echo $_GET['username']; ?>" /></td>
+					<td>Event navn:</td>
+					<td><input type="text" name="name" value="<?php echo $_GET['name']; ?>" /></td>
 				</tr>
 				<tr>
-					<td>password:</td>
-					<td><input type="text" name="password" value="<?php echo $_GET['password']; ?>"/></td>
+					<td>Dato:</td>
+					<td><input type="text" name="date" value="<?php echo $_GET['event_date']; ?>"/></td>
+				</tr>
+				<tr>
+					<td>Start:</td>
+					<td><input type="text" name="time_start" value="<?php echo $_GET['time_start']; ?>"/></td>
+				</tr>
+				<tr>
+					<td>Slut:</td>
+					<td><input type="text" name="time_end" value="<?php echo $_GET['time_end']; ?>"/></td>
+				</tr>
+				<tr>
+					<td>Adresse id:</td>
+					<td><input type="text" name="address_id" value="<?php echo $_GET['address_id']; ?>"/></td>
+				</tr>
+				<tr>
+					<td>Aktiv:</td>
+					<td><input type="text" name="isactive" value="<?php echo $_GET['isactive']; ?>"/></td>
+				</tr>
+				<tr>
+					<td>Beskrivelse:</td>
+					<td><input type="text" name="description" value="<?php echo $_GET['description']; ?>"/></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
 					<td align="right">
 						<input type="hidden" name="id" value="<?php echo $_GET['id'] ?>" />
 						<input type="hidden" name="update" value="yes" />
-						<input type="submit" value="update Record"/>
+						<input type="submit" value="Opdater event"/>
 					</td>
 				</tr>
 			</table>

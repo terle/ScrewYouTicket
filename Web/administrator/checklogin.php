@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	$hardcodedusername = "admin";
-	$hardcodedpassword = "3GenerteGnavere";
+	$hardcodedpassword = "password";
 
 	// username and password sent from form 
 	$myusername=$_POST["myusername"]; 
@@ -17,7 +17,7 @@
 		session_register("myusername");
 		session_register("mypassword");
 		$_SESSION['timeout'] = time();
-		header("location:header.php");
+		header("location:index.php");
 		echo mysql_error();
 	} else {
 		echo "<center><font style='color: red;'>Forkert brugernavn eller kodeord</font></center>";
