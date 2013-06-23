@@ -22,7 +22,7 @@
 	<body>
 	
 	<?php 
-		include "db.php";
+		include "administrator/db.php";
 
 		$event_query = "select * from event";
 		$event_result = mysql_query($event_query) or die(mysql_error());
