@@ -6,18 +6,41 @@
 	
 	include "db.php";
 	
+	$image_folder = "../images/";
 	$address_query = "select id, name from address";
 	$address_result = mysql_query($address_query);
 		
 	// Insert
 	if(isset($_POST["insert"])){
 		if($_POST["insert"]=="yes"){
-			$username=$_POST["username"];
-			$password=$_POST["password"];
+			if ($_FILES["file"]["error"] > 0) {
+				echo "Error: " . $_FILES["file"]["error"] . "<br>";
+			} else {
+				echo "Name: " . $_POST['name'] . "</br>";
+				echo "Upload: " . $_FILES["file"]["name"] . "<br>";
+				echo "Type: " . $_FILES["file"]["type"] . "<br>";
+				echo "Size: " . ($_FILES["file"]["size"] / 1024) . " kB<br>";
+				echo "Stored in: " . $_FILES["file"]["tmp_name"];
+  
+				move_uploaded_file($_FILES["file"]["tmp_name"], $image_folder . $_FILES["file"]["name"]);
+				echo "Stored in: " . "../images/" . $_FILES["file"]["name"];
+			}		
+		
+			$event_date = $_POST["event_date"];
+			$time_start = $_POST["time_start"];
+			$time_end = $_POST["time_end"];
+			$address_id = $_POST["address_id"];
+			$isactive = $_POST["isactive"];
+			$description = $_POST["description"];
 
-			$query="insert into user(username, password) values('$username', '$password')";
-			if(mysql_query($query)) {
-				echo "<center>Event oprettet!</center><br>";
+			$insertevent = "insert into event(name, event_date, time_start, time_end, address_id, isactive, description) 
+				values('$name', '$event_date', '$time_start', '$time_end', '$address_id', '$isactive', '$description')";
+			$result = mysql_query($insertevent) or die(mysql_error());
+			if($result) {
+				$inserteventimage = "insert into event_images(event_id, image_url) values(" . mysql_insert_id() . ", '" . $_FILES["file"]["name"] . "')";
+				echo($inserteventimage);
+				$imageresult = mysql_query($inserteventimage) or die(mysql_error());
+				echo "<center>Event oprettet! id: " . mysql_insert_id() . "</center><br>";
 			}
 		}
 	}
@@ -50,10 +73,11 @@
 		}
 	}
 
-	// Delete (should only disable)
+	// Deactivate/activate event
 	if(isset($_GET['operation'])){
-		if($_GET['operation']=="deactivate"){
-			$query="update event set isactive = 0 where id=".$_GET['id'];	
+		if($_GET['operation'] == "deactivate" || $_GET['operation'] == "activate"){
+			$action = $_GET['isactive'];
+			$query="update event set isactive = $action where id=".$_GET['id'];	
 			if(mysql_query($query)) {
 				echo "<center>Event deaktiveret!</center><br>";
 			}
@@ -81,23 +105,23 @@
 		</script>
 	</head>
 	<body>
-		<form method="post" action="index.php">
+		<form method="post" action="index.php" enctype="multipart/form-data">
 			<table align="center" border="0">
 				<tr>
 					<td>Event navn:</td>
-					<td><input type="text" name="eventname" /></td>
+					<td><input type="text" name="name" /></td>
 				</tr>
 				<tr>
 					<td>Dato:</td>
-					<td><p><input type="text" id="datepicker" name="date" /></p></td>
+					<td><p><input type="text" id="datepicker" name="event_date" /></p></td>
 				</tr>
 				<tr>
 					<td>Starttidspunkt:</td>
-					<td><input type="text" id="starttime" name="starttime" /></td>
+					<td><input type="text" id="starttime" name="time_start" /></td>
 				</tr>
 				<tr>
 					<td>Sluttidspunkt:</td>
-					<td><input type="text" id="endtime" name="endtime" /></td>
+					<td><input type="text" id="endtime" name="time_end" /></td>
 				</tr>
 				<tr>
 					<td>Aktivt event:</td>
@@ -105,12 +129,12 @@
 				</tr>
 				<tr>
 					<td>Beskrivelse af event:</td>
-					<td><textarea rows="4" cols="50"></textarea></td>
+					<td><textarea rows="4" cols="50" name="description"></textarea></td>
 				</tr>
 				<tr>
 					<td>Adresse:</td>
 					<td>
-						<select>
+						<select name="address_id">
 							<option value="">V&aelig;lg</option>
   							<option value="new">Ny adresse</option>
   							<?php
@@ -122,6 +146,9 @@
   							?>
 						</select>
 					</td>
+				</tr>
+				<tr>
+					<td><input type="file" name="file" /></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>
@@ -149,7 +176,7 @@
 				</tr>
 				<tr>
 					<td>Dato:</td>
-					<td><input type="text" name="date" value="<?php echo $_GET['event_date']; ?>"/></td>
+					<td><input type="text" name="event_date" value="<?php echo $_GET['event_date']; ?>"/></td>
 				</tr>
 				<tr>
 					<td>Start:</td>
@@ -189,7 +216,7 @@
 <?php
 	$query="select * from event";
 	$result=mysql_query($query);
-	if(mysql_num_rows($result)>0){
+	if(mysql_num_rows($result)>0){	
 		echo "<table align='center' border='1'>";
 		echo "<tr>";
 		echo "<th>Id</th>";
@@ -202,6 +229,9 @@
 		echo "<th>Beskrivelse</th>";
 		echo "</tr>";
 		while($row=mysql_fetch_array($result)){
+			$activeString = $row['isactive'] == 1 ? "deaktiver" : "aktiver";
+			$activeOperation = $row['isactive'] == 1 ? "deactivate&isactive=0" : "activate&isactive=1";
+
 			echo "<tr>";
 			echo "<td>".$row['id']."</td>";	
 			echo "<td>".$row['name']."</td>";	
@@ -220,7 +250,7 @@
 				."&isactive=".$row['isactive']
 				."&description=".$row['description']
 				."'>rediger</a></td>";
-			echo "<td><a href='index.php?operation=deactivate&id=".$row['id']."'>" . ($row['isactive'] == 1 ? "deaktiver" : "aktiver") . "</a></td>";	
+			echo "<td><a href='index.php?operation=" . $activeOperation . "&id=".$row['id']."'>" . $activeString . "</a></td>";	
 			echo "</tr>";
 		}
 		echo "</table>";

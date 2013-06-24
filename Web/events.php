@@ -24,7 +24,7 @@
 	<?php 
 		include "administrator/db.php";
 
-		$event_query = "select * from event";
+		$event_query = "select * from event where isactive = 1";
 		$event_result = mysql_query($event_query) or die(mysql_error());
 		
 		if($event_result) {
